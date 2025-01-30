@@ -5,6 +5,6 @@ namespace Actividad_Github_Cli.Clases
     public class RepoInfo
     {
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 }
