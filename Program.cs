@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Headers;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Actividad_Github_Cli
@@ -44,43 +43,55 @@ namespace Actividad_Github_Cli
     {
         static async Task Main(string[] args)
         {
-            #region HTTP client
-
-            using HttpClient client = new();
-            client.DefaultRequestHeaders.Add("User-Agent", "GithubActivityCLI");
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            #endregion
-
-            #region Url builder
+            args = ["Init0ne"]; // Hardcoded string for testing
+            if (args.Length == 0)
+            {
+                Console.WriteLine("Debes ingresar un nombre de usuario de GitHub");
+                Console.WriteLine("Ejemplo: GithubActivity Init0ne");
+                return;
+            }
 
             string username = args[0];
-            string apiUrl = $"https://api.github.com/users/{Uri.EscapeDataString(username)}/events";
-
-            #endregion
+            string url = $"https://api.github.com/users/{username}/events";
 
             try
             {
-                HttpResponseMessage respuesta = await client.GetAsync($"https://api.github.com/users/{username}/events");
+                using HttpClient client = new();
+                client.DefaultRequestHeaders.Add("User-Agent", "GithubActivityCLI");
 
-                if (respuesta.IsSuccessStatusCode)
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    string json = await respuesta.Content.ReadAsStringAsync();
-                    List<GitHubEvent>? eventos = JsonSerializer.Deserialize<List<GitHubEvent>>(json);
+                    string json = await response.Content.ReadAsStringAsync();
+                    JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
+                    List<GitHubEvent>? events = JsonSerializer.Deserialize<List<GitHubEvent>>(json, options);
 
-                    foreach (GitHubEvent evento in eventos)
+                    Console.WriteLine($"Actividad reciente de {username}:");
+                    Console.WriteLine("====================================");
+
+                    foreach (GitHubEvent evento in events)
                     {
-                        Console.WriteLine($"{evento.Type} en {evento.Repo?.Name ?? "repo desconocido"}");
+                        string repoName = evento.Repo?.Name?.Split('/')[1] ?? "repo desconocido";
+                        string mensaje = evento.Type switch
+                        {
+                            "PushEvent" => $"> Hizo push de {evento.Payload?.Commits?.Count ?? 0} commit(s) en {repoName}",
+                            "WatchEvent" => $"* Dio una estrella a {repoName}",
+                            "IssuesEvent" => $"- {(evento.Payload?.Action == "opened" ? "Abrió" : "Modificó")} un issue en {repoName}",
+                            _ => $"- Actividad de tipo {evento.Type} en {repoName}"
+                        };
+
+                        Console.WriteLine($"{mensaje} ({evento.CreatedAt:dd/MM/yyyy HH:mm})");
                     }
                 }
                 else
                 {
-                    Console.WriteLine($"Error: {respuesta.StatusCode}");
+                    Console.WriteLine($"Error: {(int)response.StatusCode} {response.ReasonPhrase}");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"¡Ups! Algo falló: {ex.Message}");
+                Console.WriteLine($"Error: {ex.Message}");
             }
         }
     }
