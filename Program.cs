@@ -1,49 +1,12 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Actividad_Github_Cli.Clases;
+using System.Text.Json;
 
 namespace Actividad_Github_Cli
 {
-    public class GitHubEvent
-    {
-        [JsonPropertyName("type")]
-        public string Type { get; set; }
-
-        [JsonPropertyName("repo")]
-        public RepoInfo Repo { get; set; }
-
-        [JsonPropertyName("payload")]
-        public PayloadInfo Payload { get; set; }
-
-        [JsonPropertyName("created_at")]
-        public DateTime CreatedAt { get; set; }
-    }
-
-    public class RepoInfo
-    {
-        [JsonPropertyName("name")]
-        public string Name { get; set; }
-    }
-
-    public class PayloadInfo
-    {
-        [JsonPropertyName("action")]
-        public string Action { get; set; }
-
-        [JsonPropertyName("commits")]
-        public List<CommitInfo> Commits { get; set; }
-    }
-
-    public class CommitInfo
-    {
-        [JsonPropertyName("message")]
-        public string Message { get; set; }
-    }
-
     class Program
     {
         static async Task Main(string[] args)
         {
-            args = ["Init0ne"]; // Hardcoded string for testing
             if (args.Length == 0)
             {
                 Console.WriteLine("Debes ingresar un nombre de usuario de GitHub");
@@ -68,7 +31,7 @@ namespace Actividad_Github_Cli
                     List<GitHubEvent>? events = JsonSerializer.Deserialize<List<GitHubEvent>>(json, options);
 
                     Console.WriteLine($"Actividad reciente de {username}:");
-                    Console.WriteLine("====================================");
+                    Console.WriteLine("==================================== \n");
 
                     foreach (GitHubEvent evento in events)
                     {
@@ -83,6 +46,8 @@ namespace Actividad_Github_Cli
 
                         Console.WriteLine($"{mensaje} ({evento.CreatedAt:dd/MM/yyyy HH:mm})");
                     }
+
+                    Console.WriteLine("\n====================================");
                 }
                 else
                 {
