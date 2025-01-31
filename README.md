@@ -49,13 +49,16 @@ Actividad reciente de Init0ne:
 ===============================================
 ```
 
-###Manejo de Errores ⚠️
-Error	Descripción	¡Traducción humana!
-404	Usuario no encontrado	WTF! ¿Quien es fulano? 😱
-403	Límite de API	GitHub dice: ¡Baja un cambio! 🐌
-Otros	Errores genéricos	¿Probaste reiniciar la matrix? 🕶️
+## Manejo de Errores ⚠️
 
-###Estructura del Código 🧩
+| HTTP  | Descripción               | ¡Traducción para Mortales!        | Emoji  |
+|-------|---------------------------|------------------------------------|--------|
+| 404   | Not Found                 | `WTF! ¿Quién es @${username}?`    | 🔍😱   |
+| 403   | Forbidden                 | ¡Demasiado rápido, relájate!       | 🚀🐌   |
+| 418   | I'm a teapot              | ¡Hora del té! 🫖                  | 🫖😂   |
+| 5xx   | Server Errors             | GitHub está tomando una siesta...  | 💤😴   |
+
+### Estructura del Código 🧩
 
 ```bash
 Copy
@@ -65,7 +68,7 @@ Copy
     └── 📄 GitHubEvent.cs  # Modelos para la API de GitHub
 ```
 
-###Contribuciones 🤝
+### Contribuciones 🤝
 
 ¡Se aceptan mejoras con estilo! Algunas ideas:
 
@@ -85,5 +88,5 @@ Límite de 60 peticiones/hora sin autenticación
 
 ¡Los mensajes de error son adrede divertidos! No te lo tomes personal 😉
 
-###Licencia 📄
+### Licencia 📄
 ¡Haz lo que quieras con el código! Pero si te gustó, menciona al autor original 😊
