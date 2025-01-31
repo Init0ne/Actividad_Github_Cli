@@ -31,8 +31,8 @@ namespace Actividad_Github_Cli
                     string json = await response.Content.ReadAsStringAsync();
                     List<GitHubEvent>? events = JsonSerializer.Deserialize<List<GitHubEvent>>(json, jsonOptions);
 
-                    Console.WriteLine($"Actividad reciente de {username}:");
-                    Console.WriteLine("==================================== \n");
+                    Console.WriteLine($"\nActividad reciente de {username}:");
+                    Console.WriteLine("===============================================\n");
 
                     for (int eventIndex = 0; eventIndex < events?.Count; eventIndex++)
                     {
@@ -49,17 +49,18 @@ namespace Actividad_Github_Cli
                         Console.WriteLine($"{mensaje} ({evento.CreatedAt:dd/MM/yyyy HH:mm})");
                     }
 
-                    Console.WriteLine("\n====================================");
+                    Console.WriteLine("\n===============================================");
                 }
                 else
                 {
-                    Console.WriteLine($"Error: {(int)response.StatusCode} {response.ReasonPhrase}");
-                    Console.WriteLine($"Quien es {username}?");
+                    Console.WriteLine($"\nError: {(int)response.StatusCode} {response.ReasonPhrase}");
+                    Console.WriteLine($"\nWTF!  Quien es {username}?\n");
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine("\n¿Probaste reiniciar la matrix? (o Visual Studio)\n");
             }
         }
     }
