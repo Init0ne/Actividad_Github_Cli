@@ -22,15 +22,19 @@
 ```bash
 git clone https://github.com/tu-usuario/github-activity-cli.git
 cd github-activity-cli
+```
 
-Ejecución
-Forma básica:
+###Ejecución
+####Forma básica:
 
-bash
+```bash
 Copy
 dotnet run -- <username>
 # Ejemplo:
 dotnet run -- Init0ne
+```
+
+```bash
 Ejemplo de salida:
 
 Copy
@@ -43,35 +47,43 @@ Actividad reciente de Init0ne:
 > Actividad de tipo CreateEvent en mi-super-repo (25/01/2025 17:06)
 
 ===============================================
-Manejo de Errores ⚠️
+```
+
+###Manejo de Errores ⚠️
 Error	Descripción	¡Traducción humana!
 404	Usuario no encontrado	WTF! ¿Quien es fulano? 😱
 403	Límite de API	GitHub dice: ¡Baja un cambio! 🐌
 Otros	Errores genéricos	¿Probaste reiniciar la matrix? 🕶️
-Estructura del Código 🧩
-plaintext
+
+###Estructura del Código 🧩
+
+```bash
 Copy
 📁 Actividad-Github-Cli/
 ├── 📄 Program.cs          # Lógica principal de la CLI
 └── 📁 Clases/
     └── 📄 GitHubEvent.cs  # Modelos para la API de GitHub
-Contribuciones 🤝
+```
+
+###Contribuciones 🤝
+
 ¡Se aceptan mejoras con estilo! Algunas ideas:
 
-Añadir más tipos de eventos
+- Añadir más tipos de eventos
 
-Soporte para emojis personalizados
+- Soporte para emojis personalizados
 
-Modo oscuro/light para la salida
+- Modo oscuro/light para la salida
 
-Sistema de plugins para extensiones
+- Sistema de plugins para extensiones
 
-Notas Importantes 📌
+### Notas Importantes 📌
+
 La API de GitHub puede tener retrasos (hasta 5 min para eventos nuevos)
 
 Límite de 60 peticiones/hora sin autenticación
 
 ¡Los mensajes de error son adrede divertidos! No te lo tomes personal 😉
 
-Licencia 📄
+###Licencia 📄
 ¡Haz lo que quieras con el código! Pero si te gustó, menciona al autor original 😊
